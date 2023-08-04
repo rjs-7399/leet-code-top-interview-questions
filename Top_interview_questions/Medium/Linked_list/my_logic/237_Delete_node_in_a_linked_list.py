@@ -11,10 +11,8 @@ def print_linked_list(head):
 
 def delete_node_linked_list(head,del_node):
     if head.val == del_node:
-        current = head.next
-        head.next = None
-        head = current
-        print(head.val)
+        current = head
+        current = current.next
     else:
         current = head
         while current.next:

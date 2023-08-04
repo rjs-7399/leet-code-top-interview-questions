@@ -1,37 +1,55 @@
-class LRUCache:
-    def __init__(self, max_size=2):
-        self.LRU = {}
-        self.max_size = max_size
+class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
 
-    def put(self, key, val):
-        if key in self.LRU:
-            del self.LRU[key]
-            self.LRU[key] = val
-        elif len(self.LRU) < self.max_size:
-            self.LRU[key] = val
-        else:
-            first_index = next(iter(self.LRU))
-            del self.LRU[first_index]
-            self.LRU[key] = val
+def print_linked_list(head):
+    current = head
+    while current:
+        print(current.val)
+        current = current.next
 
-    def get(self, key):
-        if key in self.LRU:
-            temp_val = self.LRU[key]
-            del self.LRU[key]
-            self.LRU[key] = temp_val
-            return self.LRU[key]
+def merge(l, r):
+    dummy = tail = ListNode(0)
+    while l and r:
+        if l.val <= r.val:
+            tail.next = l
+            l = l.next
         else:
-            return -1
+            tail.next = r
+            r = r.next
+        tail = tail.next
+    tail.next = l or r
+    return dummy.next
+
+def mergeKLists(lists):
+    if not lists:
+        return None
+    if len(lists) == 1:
+        return lists[0]
+    mid = len(lists) // 2
+    l, r = mergeKLists(lists[:mid]), mergeKLists(lists[mid:])
+    return merge(l, r)
+
+
 
 if __name__ == "__main__":
-    LRU_cache = LRUCache(max_size=2)
-    print(LRU_cache.get(2))
-    LRU_cache.put(2,6)
-    print(LRU_cache.LRU)
-    print(LRU_cache.get(1))
-    LRU_cache.put(1,5)
-    print(LRU_cache.LRU)
-    LRU_cache.put(1,2)
-    print(LRU_cache.LRU)
-    print(LRU_cache.get(1))
-    print(LRU_cache.get(2))
+    ll1 = ListNode(1)
+    ll1.next = ListNode(2)
+    ll1.next.next = ListNode(7)
+
+    ll2 = ListNode(4)
+    ll2.next = ListNode(5)
+    ll2.next.next = ListNode(9)
+
+    ll3 = ListNode(3)
+    ll3.next = ListNode(6)
+    ll3.next.next = ListNode(8)
+
+    lists = []
+    lists.append(ll1)
+    lists.append(ll2)
+    lists.append(ll3)
+
+    sorted_list = mergeKLists(lists)
+    print_linked_list(sorted_list)
