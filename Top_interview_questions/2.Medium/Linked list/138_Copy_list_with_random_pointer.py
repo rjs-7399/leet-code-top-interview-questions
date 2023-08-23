@@ -8,26 +8,26 @@ def deep_copy_linked_list(head):
     if not head:
         return None
 
-    old_to_new = {}
+    deep_copy = {}
+
     current = head
     while current:
         new_node = ListNode(current.val)
-        old_to_new[current] = new_node
+        deep_copy[current] = new_node
         current = current.next
 
     current = head
     while current:
-        new_node = old_to_new[current]
-        new_node.next = old_to_new.get(current.next)
+        new_node = deep_copy[current]
+        new_node.next = deep_copy.get(current.next)
         current = current.next
 
     current = head
     while current:
-        new_node = old_to_new[current]
-        new_node.random = old_to_new.get(current.random)
+        new_node = deep_copy[current]
+        new_node.random = deep_copy.get(current.random)
         current = current.next
-
-    return old_to_new[head]
+    return deep_copy[head]
 
 if __name__ == "__main__":
 
