@@ -6,38 +6,41 @@ class TreeNode:
         self.left = None
         self.right = None
 
-def zigZagLevelOrder(root):
+def zig_zag_level_order(root):
     if root:
-        result = []
         q = deque([root])
-        length = 0
+        level_order = []
+        index = 0
         while q:
-            length+=1
             level = []
-            for index in range(len(q)):
-                node = q.popleft()
-                level.append(node.val)
-                if node.left:
-                    q.append(node.left)
-                if node.right:
-                    q.append(node.right)
-            if length%2 != 0:
-                result.append(level)
+            for i in range(len(q)):
+                current = q.popleft()
+                if current.left:
+                    q.append(current.left)
+                if current.right:
+                    q.append(current.right)
+                level.append(current.val)
+            if index%2 == 0:
+                level_order.append(level)
             else:
-                level.reverse()
-                result.append(level)
-        return result
+                level_order.append(level[::-1])
+            index += 1
+            print(index)
+        return level_order
     else:
         return []
 
-
 if __name__ == "__main__":
-    root = TreeNode(3)
-    root.left = TreeNode(9)
+    root = TreeNode(1)
 
-    root.right = TreeNode(20)
-    root.right.left = TreeNode(15)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+
+    root.left.left = TreeNode(4)
+    root.left.right = TreeNode(5)
+
+    root.right.left = TreeNode(6)
     root.right.right = TreeNode(7)
 
-    result = zigZagLevelOrder(root)
-    print(result)
+    ans = zig_zag_level_order(root)
+    print(ans)

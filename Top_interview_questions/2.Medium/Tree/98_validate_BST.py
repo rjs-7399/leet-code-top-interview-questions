@@ -4,30 +4,23 @@ class TreeNode:
         self.left = None
         self.right = None
 
-tree_traversal = []
-
-ans = True
-def inorder_traversal(root):
-    if root:
-        inorder_traversal(root.left)
-        tree_traversal.append(root.val)
-        inorder_traversal(root.right)
-
+def get_inorder(root):
+    traversal = []
+    def inorder(root):
+        if root:
+            inorder(root.left)
+            traversal.append(root.val)
+            inorder(root.right)
+    inorder(root)
+    for i in range(len(traversal)-1):
+        if traversal[i] >= traversal[i+1]:
+            return False
+    return True
 
 if __name__ == "__main__":
-    root = TreeNode(22)
-    root.left = TreeNode(12)
-    root.left.left = TreeNode(8)
-    root.left.right = TreeNode(20)
+    root = TreeNode(2)
+    root.left = TreeNode(1)
+    root.right = TreeNode(3)
 
-    root.right = TreeNode(30)
-    root.right.left = TreeNode(35)
-    root.right.right = TreeNode(40)
-
-    inorder_traversal(root)
-    print(tree_traversal)
-    length = len(tree_traversal)
-    for i in range(length-1):
-        if tree_traversal[i] >= tree_traversal[i+1]:
-            print(False)
-    print(True)
+    traversal = get_inorder(root)
+    print(traversal)

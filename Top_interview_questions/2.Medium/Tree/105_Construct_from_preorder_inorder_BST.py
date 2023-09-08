@@ -8,7 +8,6 @@ def buildTree_preorder_inorder(preorder, inorder):
     if inorder:
         index = inorder.index(preorder.pop(0))
         root = TreeNode(inorder[index])
-        print(root.val)
         root.left = buildTree_preorder_inorder(preorder, inorder[0:index])
         root.right = buildTree_preorder_inorder(preorder, inorder[index+1:])
         return root

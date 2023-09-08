@@ -4,27 +4,22 @@ class TreeNode:
         self.left = None
         self.right = None
 
-def kthSmallest(root, k):
-    tree_traversal = []
-    def inorder_traversal(root):
+def get_traversal(root):
+    inorder_traversal = []
+    def inorder(root):
         if root:
-            inorder_traversal(root.left)
-            tree_traversal.append(root.val)
-            inorder_traversal(root.right)
-
-    inorder_traversal(root)
-    tree_traversal.sort()
-    return tree_traversal[k - 1]
+            inorder(root.left)
+            inorder_traversal.append(root.val)
+            inorder(root.right)
+    inorder(root)
+    return inorder_traversal
 
 if __name__ == "__main__":
-    root = TreeNode(5)
-    root.left = TreeNode(3)
-    root.left.left = TreeNode(2)
-    root.left.left.left = TreeNode(1)
+    root = TreeNode(3)
+    root.left = TreeNode(1)
+    root.left.right = TreeNode(2)
+    root.right = TreeNode(4)
 
-    root.right = TreeNode(6)
-    root.left.right = TreeNode(4)
-
-    k = 2
-    ans = kthSmallest(root, 2)
-    print(ans)
+    index = 1
+    inorder_traversal = get_traversal(root)
+    print(inorder_traversal[index-1])
